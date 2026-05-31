@@ -1,49 +1,93 @@
-const nodemailer = require('nodemailer');
-
-const createTransporter = () => {
-  const missing = ['EMAIL_HOST', 'EMAIL_USER', 'EMAIL_PASS'].filter((key) => !process.env[key]);
-  if (missing.length) {
-    return { transporter: null, missing };
-  }
-
-  return {
-    transporter: nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: Number(process.env.EMAIL_PORT || 587),
-      secure: process.env.EMAIL_SECURE === 'true',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    }),
-    missing: [],
-  };
-};
+const RESEND_EMAIL_URL = 'https://api.resend.com/emails';
 
 exports.sendEmail = async ({ to, subject, html, text }) => {
-  const { transporter, missing } = createTransporter();
+  // Check missing environment variable
+  const missing = ['RESEND_API_KEY'].filter(
+    (key) => !process.env[key]
+  );
 
-  if (!transporter) {
-    console.warn('[email:not-sent]', { to, subject, missing });
-    return { preview: true, missing };
+  if (missing.length) {
+    console.warn('[email:not-sent]', {
+      to,
+      subject,
+      missing,
+    });
+
+    return {
+      preview: true,
+      missing,
+    };
   }
 
-  const info = await transporter.sendMail({
-    from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
-    to,
-    subject,
-    html,
-    text,
-  });
+  // Timeout controller (20 sec)
+  const controller = new AbortController();
+  const timeout = setTimeout(
+    () => controller.abort(),
+    20000
+  );
 
-  console.log('[email:sent]', {
-    to,
-    subject,
-    messageId: info.messageId,
-    accepted: info.accepted,
-    rejected: info.rejected,
-    response: info.response,
-  });
+  // Email sender
+  const from =
+    process.env.RESEND_FROM ||
+    process.env.EMAIL_FROM ||
+    'Plumbora <onboarding@resend.dev>';
 
-  return info;
+  try {
+    const response = await fetch(RESEND_EMAIL_URL, {
+      method: 'POST',
+      signal: controller.signal,
+      headers: {
+        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from,
+        to: [to],
+        subject,
+        html,
+        text,
+      }),
+    });
+
+    const data = await response
+      .json()
+      .catch(() => ({}));
+
+    // Handle API error
+    if (!response.ok) {
+      const details =
+        data.message ||
+        data.error ||
+        response.statusText;
+
+      const error = new Error(
+        `Resend email failed: ${details}`
+      );
+
+      error.code = `RESEND_${response.status}`;
+      error.response = data;
+
+      throw error;
+    }
+
+    console.log('[email:sent]', {
+      provider: 'resend',
+      to,
+      subject,
+      messageId: data.id,
+    });
+
+    return {
+      messageId: data.id,
+      accepted: [to],
+      rejected: [],
+      response: 'Queued by Resend',
+    };
+  } catch (error) {
+    console.error('[email:error]', error);
+
+    throw error;
+  } finally {
+    clearTimeout(timeout);
+  }
 };

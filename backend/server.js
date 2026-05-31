@@ -9,6 +9,12 @@ connectDB();
 
 const app = express();
 
+// ── 1. SERVE REACT FRONTEND ASSETS FIRST ───────────────────
+// Moving this here allows your JS and CSS to bypass CORS checks completely!
+const distPath = path.resolve(__dirname, '..', 'frontend', 'dist');
+app.use(express.static(distPath));
+
+// ── 2. CORS MIDDLEWARE (Now only runs for API routes) ──────
 const envOrigins = [
   process.env.CLIENT_URL,
   process.env.CLIENT_URLS,
@@ -37,7 +43,7 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ── ROUTES ───────────────────────────────────────────────
+// ── 3. ROUTES ───────────────────────────────────────────────
 app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/plumbers', require('./routes/plumber.routes'));
 app.use('/api/services', require('./routes/service.routes'));
@@ -45,12 +51,7 @@ app.use('/api/bookings', require('./routes/booking.routes'));
 app.use('/api/reviews', require('./routes/review.routes'));
 app.use('/api/admin', require('./routes/admin.routes'));
 
-// ── SERVE REACT FRONTEND ──────────────────────────────────
-const distPath = path.resolve(__dirname, '..', 'frontend', 'dist');
-console.log('Serving static from:', distPath);
-
-app.use(express.static(distPath));
-
+// ── 4. CATCH-ALL ROUTE ─────────────────────────────────────
 app.get('*', (req, res) => {
   if (req.path.startsWith('/api')) {
     return res.status(404).json({ message: 'API route not found' });

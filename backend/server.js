@@ -1,7 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const path = require('path');  // ← ADD THIS
+const path = require('path');
 const connectDB = require('./config/db');
 
 dotenv.config();
@@ -45,12 +45,17 @@ app.use('/api/bookings', require('./routes/booking.routes'));
 app.use('/api/reviews', require('./routes/review.routes'));
 app.use('/api/admin', require('./routes/admin.routes'));
 
-// ── SERVE REACT FRONTEND ──────────────────────────────────  ← ADD THIS BLOCK
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
+// ── SERVE REACT FRONTEND ──────────────────────────────────
+const distPath = path.resolve(__dirname, '..', 'frontend', 'dist');
+console.log('Serving static from:', distPath);
+
+app.use(express.static(distPath));
 
 app.get('*', (req, res) => {
-  if (req.path.startsWith('/api')) return res.status(404).json({ message: 'API route not found' });
-  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json({ message: 'API route not found' });
+  }
+  res.sendFile(path.join(distPath, 'index.html'));
 });
 
 app.use(require('./middleware/error.middleware'));

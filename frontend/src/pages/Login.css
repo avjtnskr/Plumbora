@@ -1,0 +1,71 @@
+:root {
+  --plumbora-aqua: #00ced1;
+  --plumbora-dark-aqua: #008b8b;
+  --plumbora-white: #ffffff;
+}
+
+/* Background */
+.login-page-background {
+  background-color: #f4fcfc;
+  min-height: 100vh;
+}
+
+/* Logo */
+.plumbora-logo {
+  color: var(--plumbora-aqua);
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+/* Card Design */
+.login-card {
+  border: none;
+  border-radius: 15px;
+  background-color: var(--plumbora-white);
+  position: relative;
+}
+
+/* Login / Signup Button */
+.login-btn {
+  background-color: var(--plumbora-aqua) !important;
+  border: none !important;
+  font-weight: 600;
+  padding: 10px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+/* Hover Effect */
+.login-btn:hover {
+  background-color: var(--plumbora-dark-aqua) !important;
+  transform: scale(1.02);
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  border: none;
+  background: transparent;
+  font-size: 28px;
+  font-weight: bold;
+  color: #555;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Close Button Hover */
+.close-btn:hover {
+  color: red;
+  transform: rotate(90deg);
+}
+
+/* Link Style */
+.aqua-link {
+  color: var(--plumbora-aqua);
+}
+
+.aqua-link:hover {
+  color: var(--plumbora-dark-aqua);
+}

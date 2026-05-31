@@ -1,0 +1,712 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Clash+Display:wght@500;600;700&display=swap');
+
+:root {
+  --aqua: #00C2C7;
+  --aqua-light: #E0F9FA;
+  --aqua-mid: #00A8AD;
+  --aqua-dark: #007A7E;
+  --white: #FFFFFF;
+  --off-white: #F7FEFE;
+  --text-dark: #0D2B2C;
+  --text-mid: #3D6163;
+  --text-light: #6E9698;
+  --shadow-aqua: 0 8px 32px rgba(0, 194, 199, 0.15);
+  --shadow-card: 0 2px 20px rgba(13, 43, 44, 0.08);
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--off-white);
+  color: var(--text-dark);
+}
+
+.home-page {
+  overflow-x: hidden;
+}
+
+/* â”€â”€ NAVBAR â”€â”€ */
+.navbar-custom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(0, 194, 199, 0.12);
+  padding: 14px 0;
+  transition: box-shadow 0.3s;
+}
+
+.navbar-custom.scrolled {
+  box-shadow: var(--shadow-card);
+}
+
+.nav-brand {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--aqua-dark);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-brand span {
+  color: var(--aqua);
+}
+
+.nav-logo-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--aqua);
+  display: inline-block;
+  margin-bottom: 2px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.nav-link-item {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-mid);
+  text-decoration: none;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+
+.nav-link-item:hover {
+  color: var(--aqua);
+}
+
+.btn-nav {
+  background: var(--aqua);
+  color: white;
+  border: none;
+  padding: 9px 22px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.btn-nav:hover {
+  background: var(--aqua-mid);
+  transform: translateY(-1px);
+}
+
+/* â”€â”€ HERO â”€â”€ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 120px 0 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--aqua-light);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.hero-bg-circle.c1 {
+  width: 520px;
+  height: 520px;
+  top: -120px;
+  right: -100px;
+}
+
+.hero-bg-circle.c2 {
+  width: 280px;
+  height: 280px;
+  bottom: 60px;
+  left: -80px;
+  opacity: 0.4;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--aqua-light);
+  color: var(--aqua-dark);
+  border: 1px solid rgba(0, 194, 199, 0.25);
+  border-radius: 50px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  animation: fadeUp 0.6s ease both;
+}
+
+.hero-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--aqua);
+}
+
+.hero-title {
+  font-family: 'Clash Display', sans-serif;
+  font-size: clamp(38px, 5vw, 62px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+  animation: fadeUp 0.6s 0.1s ease both;
+}
+
+.hero-title .accent {
+  color: var(--aqua);
+}
+
+.hero-subtitle {
+  font-size: 17px;
+  color: var(--text-mid);
+  line-height: 1.7;
+  max-width: 480px;
+  margin-bottom: 36px;
+  font-weight: 400;
+  animation: fadeUp 0.6s 0.2s ease both;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  animation: fadeUp 0.6s 0.3s ease both;
+}
+
+.btn-primary-custom {
+  background: var(--aqua);
+  color: white;
+  border: none;
+  padding: 14px 30px;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+  box-shadow: 0 4px 18px rgba(0, 194, 199, 0.35);
+}
+
+.btn-primary-custom:hover {
+  background: var(--aqua-mid);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 194, 199, 0.4);
+}
+
+.btn-outline-custom {
+  background: transparent;
+  color: var(--aqua-dark);
+  border: 1.5px solid var(--aqua);
+  padding: 14px 30px;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.btn-outline-custom:hover {
+  background: var(--aqua-light);
+  transform: translateY(-2px);
+}
+
+.hero-card-float {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-aqua);
+  padding: 24px;
+  animation: fadeUp 0.7s 0.2s ease both;
+  border: 1px solid rgba(0, 194, 199, 0.1);
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.stat-box {
+  background: var(--aqua-light);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  text-align: center;
+}
+
+.stat-num {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--aqua-dark);
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-mid);
+  margin-top: 2px;
+}
+
+.hero-plumber-card {
+  background: white;
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 12px;
+  border: 1px solid rgba(0, 194, 199, 0.08);
+}
+
+.plumber-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--aqua-light), var(--aqua));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.plumber-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.plumber-meta {
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+.status-badge {
+  margin-left: auto;
+  background: #E6FBF1;
+  color: #0D7A4A;
+  border-radius: 50px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* â”€â”€ HOW IT WORKS â”€â”€ */
+.section {
+  padding: 90px 0;
+}
+
+.section-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--aqua);
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-family: 'Clash Display', sans-serif;
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 14px;
+}
+
+.section-sub {
+  font-size: 16px;
+  color: var(--text-mid);
+  max-width: 500px;
+  line-height: 1.7;
+}
+
+.step-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 32px 28px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(0, 194, 199, 0.08);
+  transition: all 0.3s;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.step-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--aqua);
+  transform: scaleX(0);
+  transition: transform 0.3s;
+  transform-origin: left;
+}
+
+.step-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-aqua);
+}
+
+.step-card:hover::before {
+  transform: scaleX(1);
+}
+
+.step-num {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--aqua-light);
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.step-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-sm);
+  background: var(--aqua-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.step-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.step-desc {
+  font-size: 14px;
+  color: var(--text-mid);
+  line-height: 1.65;
+}
+
+/* â”€â”€ SERVICES â”€â”€ */
+.services-bg {
+  background: var(--aqua-light);
+}
+
+.service-chip {
+  background: white;
+  border-radius: 50px;
+  padding: 12px 22px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1.5px solid transparent;
+}
+
+.service-chip:hover {
+  border-color: var(--aqua);
+  color: var(--aqua-dark);
+  transform: translateY(-2px);
+}
+
+.service-chip .icon {
+  font-size: 20px;
+}
+
+/* â”€â”€ PLUMBERS â”€â”€ */
+.plumber-card {
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(0, 194, 199, 0.08);
+  transition: all 0.3s;
+}
+
+.plumber-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-aqua);
+}
+
+.plumber-card-top {
+  background: linear-gradient(135deg, var(--aqua-light) 0%, rgba(0, 194, 199, 0.05) 100%);
+  padding: 28px;
+  text-align: center;
+}
+
+.plumber-avatar-lg {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--aqua), var(--aqua-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin: 0 auto 12px;
+  border: 3px solid white;
+  box-shadow: 0 4px 14px rgba(0, 194, 199, 0.3);
+}
+
+.plumber-card-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.plumber-card-spec {
+  font-size: 13px;
+  color: var(--text-mid);
+  margin-top: 2px;
+}
+
+.stars {
+  color: #F5A623;
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+.plumber-card-body {
+  padding: 20px 24px;
+}
+
+.plumber-info-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.plumber-info-label {
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+.plumber-info-val {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+.btn-book {
+  width: 100%;
+  background: var(--aqua);
+  color: white;
+  border: none;
+  padding: 11px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 14px;
+  transition: background 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.btn-book:hover {
+  background: var(--aqua-mid);
+}
+
+/* â”€â”€ TESTIMONIALS â”€â”€ */
+.review-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(0, 194, 199, 0.08);
+  height: 100%;
+}
+
+.review-quote {
+  font-size: 32px;
+  color: var(--aqua-light);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.review-text {
+  font-size: 14px;
+  color: var(--text-mid);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.reviewer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reviewer-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--aqua-light), var(--aqua));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.reviewer-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.reviewer-loc {
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+/* â”€â”€ CTA â”€â”€ */
+.cta-section {
+  background: linear-gradient(135deg, var(--aqua-dark) 0%, var(--aqua) 100%);
+  padding: 80px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  top: -150px;
+  right: -100px;
+}
+
+.cta-title {
+  font-family: 'Clash Display', sans-serif;
+  font-size: clamp(28px, 4vw, 46px);
+  font-weight: 700;
+  color: white;
+  margin-bottom: 14px;
+}
+
+.cta-sub {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 36px;
+}
+
+.btn-cta-white {
+  background: white;
+  color: var(--aqua-dark);
+  border: none;
+  padding: 14px 34px;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+}
+
+.btn-cta-white:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+}
+
+/* â”€â”€ FOOTER â”€â”€ */
+.footer {
+  background: var(--text-dark);
+  padding: 50px 0 28px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.footer-brand {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.footer-brand span {
+  color: var(--aqua);
+}
+
+.footer-desc {
+  font-size: 13px;
+  line-height: 1.7;
+  max-width: 260px;
+}
+
+.footer-heading {
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.footer-link {
+  display: block;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 8px;
+  text-decoration: none;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+
+.footer-link:hover {
+  color: var(--aqua);
+}
+
+.footer-divider {
+  border-color: rgba(255, 255, 255, 0.08);
+  margin: 30px 0 20px;
+}
+
+.footer-bottom {
+  font-size: 12px;
+}
+
+/* â”€â”€ ANIMATIONS â”€â”€ */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

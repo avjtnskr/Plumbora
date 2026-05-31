@@ -1,17 +1,14 @@
-const express    = require('express');
-const dotenv     = require('dotenv');
-const cors       = require('cors');
-const connectDB  = require('./config/db');
+const express = require('express');
+const dotenv = require('dotenv');
+const cors = require('cors');
+const path = require('path');  // ← ADD THIS
+const connectDB = require('./config/db');
 
-// Load env vars
 dotenv.config();
-
-// Connect to MongoDB
 connectDB();
 
 const app = express();
 
-// ── MIDDLEWARE ───────────────────────────────────────────
 const envOrigins = [
   process.env.CLIENT_URL,
   process.env.CLIENT_URLS,
@@ -36,26 +33,28 @@ app.use(cors({
   },
   credentials: true,
 }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ── ROUTES ───────────────────────────────────────────────
-app.use('/api/auth',     require('./routes/auth.routes'));
+app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/plumbers', require('./routes/plumber.routes'));
 app.use('/api/services', require('./routes/service.routes'));
 app.use('/api/bookings', require('./routes/booking.routes'));
-app.use('/api/reviews',  require('./routes/review.routes'));
-app.use('/api/admin',    require('./routes/admin.routes'));
+app.use('/api/reviews', require('./routes/review.routes'));
+app.use('/api/admin', require('./routes/admin.routes'));
 
-// ── HEALTH CHECK ─────────────────────────────────────────
-app.get('/', (req, res) => {
-  res.json({ message: 'Plumbora API is running 🔧' });
+// ── SERVE REACT FRONTEND ──────────────────────────────────  ← ADD THIS BLOCK
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+app.get('*', (req, res) => {
+  if (req.path.startsWith('/api')) return res.status(404).json({ message: 'API route not found' });
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
 });
 
-// ── ERROR HANDLER ─────────────────────────────────────────
 app.use(require('./middleware/error.middleware'));
 
-// ── START SERVER ──────────────────────────────────────────
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

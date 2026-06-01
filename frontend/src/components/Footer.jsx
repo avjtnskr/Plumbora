@@ -159,7 +159,6 @@ export default function Footer() {
 
           <div className="footer-bottom">
             <span>© 2026 Plumbora. All rights reserved.</span>
-            <span>Made with MAC M4</span>
             <span>Privacy Policy · Terms of Service · Cookie Policy</span>
           </div>
         </div>
